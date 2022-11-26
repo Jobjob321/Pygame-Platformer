@@ -25,7 +25,7 @@ applyGravity = True
 
 #objects
 player = Player()
-objects = [Object(50,700,50,50), Object(500, 750, 50, 50), Object(475, 700, 100, 50)]
+objects = [Object(50,700,50,50, (0,0,0)), Object(500, 750, 50, 50, (255,255,255)), Object(475, 700, 100, 50, (255,0,0))]
 while Running:
     clock.tick(300)
     now = time.time()
