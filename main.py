@@ -7,7 +7,7 @@ pygame.init()
 
 WINDOW_SIZE = [800, 800]
 screen = pygame.display.set_mode((WINDOW_SIZE[0], WINDOW_SIZE[1]), 0 ,32)
-
+clock = pygame.time.Clock()
 
 
 moveleft = False
@@ -25,9 +25,9 @@ applyGravity = True
 player = Player()
 objects = [Object(50,700,50,50), Object(500, 700, 75, 100)]
 while Running:
-    fps = pygame.time.get_ticks()
-    dt = (fps - getTicksLastFrame) / 1000
-    getTicksLastFrame = fps
+    t = pygame.time.get_ticks()
+    dt = (t - getTicksLastFrame) / 1000.0
+    getTicksLastFrame = t
     screen.fill((146,244,255))
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -56,6 +56,7 @@ while Running:
     if player.position.y + 50 > WINDOW_SIZE[1] and player.y_momentum > 0:
         player.y_momentum = 0
         CanJump = True
+        applyGravity = False
 
     
 
@@ -80,14 +81,13 @@ while Running:
                 player.position.x = object_right
             if abs(object.x - player_right) < collision_tolerance:
                 player.position.x = object.x - 50
-
-        else:
-            applyGravity = True
+            
         object.draw(screen)
 
     if applyGravity == True:
         player.y_momentum += player.gravity * dt
-    
+        CanJump = False
+
     if CanJump == True and jump == True:
         player.y_momentum -= 250 * dt
         CanJump = False
@@ -96,5 +96,5 @@ while Running:
     player.position.y += player.y_momentum
     Player.Draw(screen, player.position.x, player.position.y)
     pygame.display.update()
-
+    applyGravity = True
 pygame.quit()
