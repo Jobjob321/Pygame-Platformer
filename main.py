@@ -25,7 +25,7 @@ applyGravity = True
 
 #objects
 player = Player()
-objects = [Object(50,700,50,50), Object(500, 700, 75, 100)]
+objects = [Object(50,700,50,50), Object(500, 750, 50, 50), Object(475, 700, 100, 50)]
 while Running:
     clock.tick(300)
     now = time.time()
@@ -82,15 +82,17 @@ while Running:
                     player.y_momentum = 0
                 applyGravity = True
             if abs(object_right - player.position.x) < collision_tolerance:
-                player.position.x = object_right
+                if (xbefore - player.position.x) > 0:
+                    player.position.x = object_right
             if abs(object.x - player_right) < collision_tolerance:
-                player.position.x = object.x - 50
+                if (xbefore - player.position.x) < 0:
+                    player.position.x = object.x - 50
             
         object.draw(screen)
 
 
     if CanJump == True and jump == True:
-        player.y_momentum -= 500
+        player.y_momentum = -500
         CanJump = False
 
     if applyGravity == True:
@@ -102,4 +104,5 @@ while Running:
     Player.Draw(screen, player.position.x, player.position.y)
     pygame.display.update()
     applyGravity = True
+    xbefore = player.position.x
 pygame.quit()
