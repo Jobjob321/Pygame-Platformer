@@ -10,7 +10,7 @@ WINDOW_SIZE = [800, 800]
 screen = pygame.display.set_mode((WINDOW_SIZE[0], WINDOW_SIZE[1]), 0 ,32)
 clock = pygame.time.Clock()
 
-
+scroll = [0,0]
 moveleft = False
 moveright = False
 jump = False
@@ -23,15 +23,22 @@ Running = True
 CanJump = False
 applyGravity = True
 
-#objects
 player = Player()
-objects = [Object(50,700,50,50, (0,0,0)), Object(500, 750, 50, 50, (255,255,255)), Object(475, 700, 100, 50, (255,0,0))]
+#objects
+objects = [Object(50-scroll[0],700,50,50, (0,0,0)), Object(500, 750, 50, 50, (255,255,255)), Object(475, 700, 100, 50, (255,0,0))]
 while Running:
     clock.tick(300)
     now = time.time()
     dt = now - prev_time
     prev_time = now
     screen.fill((146,244,255))
+
+
+    scroll[0] += (player.position.x-scroll[0] - WINDOW_SIZE[0]/2)/200
+    scroll[1] += (player.position.y-scroll[1] - WINDOW_SIZE[1]/2)/200
+    if scroll[1] > 0:
+        scroll[1] = 0
+
     for event in pygame.event.get():
         if event.type == QUIT:
             Running = False
@@ -65,7 +72,7 @@ while Running:
 
 
 
-    collision_tolerance = 10
+    collision_tolerance = 5
     for object in objects:
         if checkCollisions(object.x, object.y, object.width, object.height, player.position.x, player.position.y, 50, 50):
             player_bottom = player.position.y  + 50
@@ -88,7 +95,7 @@ while Running:
                 if (xbefore - player.position.x) < 0:
                     player.position.x = object.x - 50
             
-        object.draw(screen)
+        object.draw(screen, scroll[0], scroll[1])
 
 
     if CanJump == True and jump == True:
@@ -101,7 +108,7 @@ while Running:
 
 
     player.position.y += player.y_momentum * dt
-    Player.Draw(screen, player.position.x, player.position.y)
+    Player.Draw(screen, player.position.x - scroll[0], player.position.y - scroll[1])
     pygame.display.update()
     applyGravity = True
     xbefore = player.position.x
