@@ -52,7 +52,7 @@ while Running:
 
     
     if moveleft == True:
-        player.position.x -= 200 * -dt
+        player.position.x -= 200 * dt
     if moveright == True:
         player.position.x += 200 * dt
     
@@ -97,8 +97,6 @@ while Running:
         player.y_momentum += player.gravity * dt
         CanJump = False
 
-    if player.y_momentum > 300:
-        player.y_momentum = 300
 
     player.position.y += player.y_momentum * dt
     Player.Draw(screen, player.position.x, player.position.y)
