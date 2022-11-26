@@ -3,6 +3,7 @@ from Player import Player
 from object import Object
 from utils import checkCollisions
 from pygame.locals import *
+import time
 pygame.init()
 
 WINDOW_SIZE = [800, 800]
@@ -14,7 +15,8 @@ moveleft = False
 moveright = False
 jump = False
 
-
+prev_time = time.time()
+dt = 0
 
 getTicksLastFrame = 0
 Running = True
@@ -25,9 +27,10 @@ applyGravity = True
 player = Player()
 objects = [Object(50,700,50,50), Object(500, 700, 75, 100)]
 while Running:
-    t = pygame.time.get_ticks()
-    dt = (t - getTicksLastFrame) / 1000.0
-    getTicksLastFrame = t
+    clock.tick(300)
+    now = time.time()
+    dt = now - prev_time
+    prev_time = now
     screen.fill((146,244,255))
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -49,19 +52,20 @@ while Running:
 
     
     if moveleft == True:
-        player.position.x -= 200 * dt
+        player.position.x -= 200 * -dt
     if moveright == True:
         player.position.x += 200 * dt
     
-    if player.position.y + 50 > WINDOW_SIZE[1] and player.y_momentum > 0:
+    if player.position.y + 50 >= WINDOW_SIZE[1] and player.y_momentum > 0:
         player.y_momentum = 0
+        player.position.y = WINDOW_SIZE[1] - 50
         CanJump = True
         applyGravity = False
 
     
 
     
-    collision_tolerance = 2
+    collision_tolerance = 10
     for object in objects:
         if checkCollisions(object.x, object.y, object.width, object.height, player.position.x, player.position.y, 50, 50):
             player_bottom = player.position.y  + 50
@@ -84,16 +88,19 @@ while Running:
             
         object.draw(screen)
 
+
+    if CanJump == True and jump == True:
+        player.y_momentum -= 500
+        CanJump = False
+
     if applyGravity == True:
         player.y_momentum += player.gravity * dt
         CanJump = False
 
-    if CanJump == True and jump == True:
-        player.y_momentum -= 250 * dt
-        CanJump = False
+    if player.y_momentum > 300:
+        player.y_momentum = 300
 
-
-    player.position.y += player.y_momentum
+    player.position.y += player.y_momentum * dt
     Player.Draw(screen, player.position.x, player.position.y)
     pygame.display.update()
     applyGravity = True
