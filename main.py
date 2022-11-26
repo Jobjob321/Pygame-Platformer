@@ -62,9 +62,9 @@ while Running:
         CanJump = True
         applyGravity = False
 
-    
 
-    
+
+
     collision_tolerance = 10
     for object in objects:
         if checkCollisions(object.x, object.y, object.width, object.height, player.position.x, player.position.y, 50, 50):
@@ -77,14 +77,14 @@ while Running:
                     applyGravity = False
                     player.y_momentum = 0
                     CanJump = True
-            if abs(object_bottom - player.position.y) < collision_tolerance:
+            elif abs(object_bottom - player.position.y) < collision_tolerance:
                 if player.y_momentum < 0:
                     player.y_momentum = 0
                 applyGravity = True
-            if abs(object_right - player.position.x) < collision_tolerance:
+            elif abs(object_right - player.position.x) < collision_tolerance:
                 if (xbefore - player.position.x) > 0:
                     player.position.x = object_right
-            if abs(object.x - player_right) < collision_tolerance:
+            elif abs(object.x - player_right) < collision_tolerance:
                 if (xbefore - player.position.x) < 0:
                     player.position.x = object.x - 50
             
