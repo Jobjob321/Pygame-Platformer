@@ -1,5 +1,4 @@
 import pygame
-from object import Object
 from pygame.locals import *
 
 class Player:
