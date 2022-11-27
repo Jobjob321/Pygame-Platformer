@@ -72,7 +72,7 @@ while Running:
 
 
 
-    collision_tolerance = 5
+    collision_tolerance = 10
     for object in objects:
         if checkCollisions(object.x, object.y, object.width, object.height, player.position.x, player.position.y, 50, 50):
             player_bottom = player.position.y  + 50
