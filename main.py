@@ -26,16 +26,17 @@ applyGravity = True
 player = Player()
 #objects
 objects = [Object(50,700,50,50, (0,0,0)), Object(500, 750, 50, 50, (255,255,255)), Object(475, 700, 100, 50, (255,0,0))]
+objects.append(Object(1000,700,50,100, (255,255,255)))
 while Running:
-    clock.tick(300)
+    clock.tick(144)
     now = time.time()
     dt = now - prev_time
     prev_time = now
     screen.fill((146,244,255))
 
 
-    scroll[0] += (player.position.x-scroll[0] - WINDOW_SIZE[0]/2)/30
-    scroll[1] += (player.position.y-scroll[1] - WINDOW_SIZE[1]/2)/30
+    scroll[0] += (player.position.x-scroll[0] - WINDOW_SIZE[0]/2)/100
+    scroll[1] += (player.position.y-scroll[1] - WINDOW_SIZE[1]/2)/100
     if scroll[1] > 0:
         scroll[1] = 0
 
