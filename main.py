@@ -43,8 +43,8 @@ while Running:
     screen.fill((146,244,255))
 
 
-    scroll[0] += (player.position.x-scroll[0] - WINDOW_SIZE[0]/2)/50
-    scroll[1] += (player.position.y-scroll[1] - WINDOW_SIZE[1]/2)/50
+    scroll[0] += (player.position.x-scroll[0] - WINDOW_SIZE[0]/2) * 2.5 * dt
+    scroll[1] += (player.position.y-scroll[1] - WINDOW_SIZE[1]/2) * 2.5 * dt
     if scroll[1] > 0:
         scroll[1] = 0
 
@@ -65,17 +65,12 @@ while Running:
                 moveright = False
             if event.key == K_SPACE:
                 jump = False
-
-    
     
     if player.position.y + 50 >= WINDOW_SIZE[1] and player.y_momentum > 0:
         player.y_momentum = 0
         player.position.y = WINDOW_SIZE[1] - 50
         CanJump = True
         applyGravity = False
-
-
-
 
     collision_tolerance = 2
     for i in range(10):
