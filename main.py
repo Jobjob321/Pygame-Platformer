@@ -32,7 +32,7 @@ player = Player()
 objects = [Object(50,700,50,50, (0,0,0)), Object(500, 750, 50, 50, (255,255,255)), Object(475, 700, 100, 50, (255,0,0))]
 objects.append(Object(1000,700,50,100, (255,255,255)))
 
-coins = [Coin(700, 550)]
+coins = [Coin(700, 550), Coin(900, 700)]
 coinamount = 0
 while Running:
     clock.tick(144)
@@ -110,8 +110,6 @@ while Running:
             print(coinamount)
             coins.remove(coin)
         coin.draw(screen, scroll[0], scroll[1])
-            
-        object.draw(screen, scroll[0], scroll[1])
 
 
     if CanJump == True and jump == True:
