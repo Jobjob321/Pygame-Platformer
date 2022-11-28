@@ -1,7 +1,8 @@
-import pygame
+import pygame, math
 from Player import Player
 from object import Object
 from utils import checkCollisions
+from gun import Gun
 from coin import Coin
 from pygame.locals import *
 import time
@@ -89,6 +90,7 @@ while Running:
             player.y_momentum += player.gravity * dt
             CanJump = False
         player.position.y += player.y_momentum * dt
+        mouse = pygame.mouse.get_pos()
         for object in objects:
             if checkCollisions(object.x, object.y, object.width, object.height, player.position.x, player.position.y, 50, 50):
                 player_bottom = player.position.y  + 50
@@ -125,7 +127,12 @@ while Running:
 
     cointext = FONT.render("Coins: " + str(coinamount), 1, (0,0,0))
     screen.blit(cointext, (10, 10))
+
+    pistol = Gun(player.position.x, player.position.y)
+    pistol.rotate(mouse)
     Player.Draw(screen, player.position.x - scroll[0], player.position.y - scroll[1])
+    pistol.draw(screen, scroll[0], scroll[1])
+    
     pygame.display.update()
     applyGravity = True
     xbefore = player.position.x
