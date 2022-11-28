@@ -2,6 +2,7 @@ import pygame
 from Player import Player
 from object import Object
 from utils import checkCollisions
+from coin import Coin
 from pygame.locals import *
 import time
 pygame.init()
@@ -23,10 +24,16 @@ Running = True
 CanJump = False
 applyGravity = True
 
+
+FONT = pygame.font.SysFont("Helvetica-bold", 50)
+
 player = Player()
 #objects
 objects = [Object(50,700,50,50, (0,0,0)), Object(500, 750, 50, 50, (255,255,255)), Object(475, 700, 100, 50, (255,0,0))]
 objects.append(Object(1000,700,50,100, (255,255,255)))
+
+coins = [Coin(700, 550)]
+coinamount = 0
 while Running:
     clock.tick(144)
     now = time.time()
@@ -35,8 +42,8 @@ while Running:
     screen.fill((146,244,255))
 
 
-    scroll[0] += (player.position.x-scroll[0] - WINDOW_SIZE[0]/2)/100
-    scroll[1] += (player.position.y-scroll[1] - WINDOW_SIZE[1]/2)/100
+    scroll[0] += (player.position.x-scroll[0] - WINDOW_SIZE[0]/2)/50
+    scroll[1] += (player.position.y-scroll[1] - WINDOW_SIZE[1]/2)/50
     if scroll[1] > 0:
         scroll[1] = 0
 
@@ -95,6 +102,14 @@ while Running:
             elif abs(object.x - player_right) < collision_tolerance:
                 if (xbefore - player.position.x) < 0:
                     player.position.x = object.x - 50
+        object.draw(screen, scroll[0], scroll[1])
+    
+    for coin in coins:
+        if checkCollisions(coin.x, coin.y, coin.width, coin.height, player.position.x, player.position.y, 50, 50):
+            coinamount += 1
+            print(coinamount)
+            coins.remove(coin)
+        coin.draw(screen, scroll[0], scroll[1])
             
         object.draw(screen, scroll[0], scroll[1])
 
@@ -108,6 +123,9 @@ while Running:
         CanJump = False
 
 
+
+    cointext = FONT.render("Coins: " + str(coinamount), 1, (0,0,0))
+    screen.blit(cointext, (10, 10))
     player.position.y += player.y_momentum * dt
     Player.Draw(screen, player.position.x - scroll[0], player.position.y - scroll[1])
     pygame.display.update()
