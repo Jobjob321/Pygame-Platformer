@@ -29,11 +29,15 @@ FONT = pygame.font.SysFont("Helvetica-bold", 50)
 
 player = Player()
 #objects
-objects = [Object(50,700,50,50, (0,0,0)), Object(500, 750, 50, 50, (255,255,255)), Object(475, 700, 100, 50, (255,0,0))]
-objects.append(Object(1000,700,50,100, (255,255,255)))
+objects = [
+    Object(50,700,50,50, (0,0,0)),
+    Object(500, 750, 50, 50, (255,255,255)),
+    Object(475, 700, 100, 50, (255,0,0)),
+    Object(1000,700,50,100, (255,255,255))
+]
 
 coins = [Coin(700, 550), Coin(900, 700)]
-coinimage = pygame.image.load("imgs/Coin.png")
+coinimage = pygame.image.load("imgs/Coin.png").convert_alpha()
 coinamount = 0
 while Running:
     clock.tick(144)
