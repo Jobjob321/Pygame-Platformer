@@ -33,6 +33,7 @@ objects = [Object(50,700,50,50, (0,0,0)), Object(500, 750, 50, 50, (255,255,255)
 objects.append(Object(1000,700,50,100, (255,255,255)))
 
 coins = [Coin(700, 550), Coin(900, 700)]
+coinimage = pygame.image.load("imgs/Coin.png")
 coinamount = 0
 while Running:
     clock.tick(144)
@@ -80,7 +81,7 @@ while Running:
 
 
 
-    collision_tolerance = 10
+    collision_tolerance = 15
     for object in objects:
         if checkCollisions(object.x, object.y, object.width, object.height, player.position.x, player.position.y, 50, 50):
             player_bottom = player.position.y  + 50
@@ -109,7 +110,7 @@ while Running:
             coinamount += 1
             print(coinamount)
             coins.remove(coin)
-        coin.draw(screen, scroll[0], scroll[1])
+        coin.draw(screen, scroll[0], scroll[1], coinimage)
 
 
     if CanJump == True and jump == True:
