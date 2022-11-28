@@ -16,6 +16,7 @@ scroll = [0,0]
 moveleft = False
 moveright = False
 jump = False
+mouse = [0,0]
 
 prev_time = time.time()
 dt = 0
@@ -47,7 +48,7 @@ while Running:
     prev_time = now
     screen.fill((146,244,255))
 
-
+    mouse = pygame.mouse.get_pos()
     scroll[0] += (player.position.x-scroll[0] - WINDOW_SIZE[0]/2) * 2.5 * dt
     scroll[1] += (player.position.y-scroll[1] - WINDOW_SIZE[1]/2) * 2.5 * dt
     if scroll[1] > 0:
@@ -77,8 +78,9 @@ while Running:
         CanJump = True
         applyGravity = False
 
-    collision_tolerance = 2
+    collision_tolerance = 3
     for i in range(10):
+        pistol = Gun(player.position.x, player.position.y, mouse[0],mouse[1])
         if moveleft == True:
             player.position.x -= 25 * dt
         if moveright == True:
@@ -90,7 +92,6 @@ while Running:
             player.y_momentum += player.gravity * dt
             CanJump = False
         player.position.y += player.y_momentum * dt
-        mouse = pygame.mouse.get_pos()
         for object in objects:
             if checkCollisions(object.x, object.y, object.width, object.height, player.position.x, player.position.y, 50, 50):
                 player_bottom = player.position.y  + 50
@@ -128,11 +129,9 @@ while Running:
     cointext = FONT.render("Coins: " + str(coinamount), 1, (0,0,0))
     screen.blit(cointext, (10, 10))
 
-    pistol = Gun(player.position.x, player.position.y)
-    pistol.rotate(mouse)
     Player.Draw(screen, player.position.x - scroll[0], player.position.y - scroll[1])
     pistol.draw(screen, scroll[0], scroll[1])
-    
+
     pygame.display.update()
     applyGravity = True
     xbefore = player.position.x
