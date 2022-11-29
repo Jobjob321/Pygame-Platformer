@@ -13,8 +13,7 @@ class Gun:
                 self.rot = 0
         if self.rotleft == True:
             self.rot += 3
-            self.image = pygame.transform.rotozoom(self.image, self.rot, 1)
         elif self.rotright == True:
             self.rot -= 3
-            self.image = pygame.transform.rotozoom(self.image, self.rot, 1)
+        self.image = pygame.transform.rotozoom(self.image, self.rot, 1)
         screen.blit(self.image, (self.x - scroll_x, self.y - scroll_y))
