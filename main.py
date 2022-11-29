@@ -41,6 +41,7 @@ objects = [
 coins = [Coin(700, 550), Coin(900, 700)]
 coinimage = pygame.image.load("imgs/Coin.png").convert_alpha()
 coinamount = 0
+pistol = Gun()
 while Running:
     clock.tick(144)
     now = time.time()
@@ -53,34 +54,39 @@ while Running:
     scroll[1] += (player.position.y-scroll[1] - WINDOW_SIZE[1]/2) * 2.5 * dt
     if scroll[1] > 0:
         scroll[1] = 0
-
     for event in pygame.event.get():
         if event.type == QUIT:
             Running = False
         if event.type == pygame.KEYDOWN:
-            if event.key == K_a or event.key == K_LEFT:
+            if event.key == K_a:
                 moveleft = True
-            if event.key == K_d or event.key == K_RIGHT:
+            if event.key == K_d:
                 moveright = True
+            if event.key == K_LEFT:
+                pistol.rotleft = True
+            if event.key == K_RIGHT:
+                pistol.rotright = True
             if event.key == K_SPACE:
                 jump = True
         if event.type == pygame.KEYUP:
-            if event.key == K_a or event.key == K_LEFT:
+            if event.key == K_a:
                 moveleft = False
-            if event.key == K_d or event.key == K_RIGHT:
+            if event.key == K_d:
                 moveright = False
             if event.key == K_SPACE:
                 jump = False
-    
+            if event.key == K_LEFT:
+                pistol.rotleft = False
+            if event.key == K_RIGHT:
+                pistol.rotright = False
     if player.position.y + 50 >= WINDOW_SIZE[1] and player.y_momentum > 0:
         player.y_momentum = 0
         player.position.y = WINDOW_SIZE[1] - 50
         CanJump = True
         applyGravity = False
 
-    collision_tolerance = 3
+    collision_tolerance = 4
     for i in range(10):
-        pistol = Gun(player.position.x, player.position.y, mouse[0],mouse[1])
         if moveleft == True:
             player.position.x -= 25 * dt
         if moveright == True:
@@ -130,7 +136,7 @@ while Running:
     screen.blit(cointext, (10, 10))
 
     Player.Draw(screen, player.position.x - scroll[0], player.position.y - scroll[1])
-    pistol.draw(screen, scroll[0], scroll[1])
+    pistol.draw(screen, scroll[0], scroll[1], player.position.x, player.position.y)
 
     pygame.display.update()
     applyGravity = True
