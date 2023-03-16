@@ -1,4 +1,4 @@
-import pygame, math
+import pygame
 from Player import Player
 from object import Object
 from utils import checkCollisions
@@ -35,7 +35,8 @@ objects = [
     Object(50,700,50,50, (0,0,0)),
     Object(500, 750, 50, 50, (255,255,255)),
     Object(475, 700, 100, 50, (255,0,0)),
-    Object(1000,700,50,100, (255,255,255))
+    Object(1000,700,50,100, (255,255,255)),
+    Object(1500, 700, 100, 50, (0,0,0))
 ]
 
 coins = [Coin(700, 550), Coin(900, 700)]
@@ -62,10 +63,6 @@ while Running:
                 moveleft = True
             if event.key == K_d:
                 moveright = True
-            if event.key == K_LEFT:
-                pistol.rotleft = True
-            if event.key == K_RIGHT:
-                pistol.rotright = True
             if event.key == K_SPACE:
                 jump = True
         if event.type == pygame.KEYUP:
@@ -75,10 +72,7 @@ while Running:
                 moveright = False
             if event.key == K_SPACE:
                 jump = False
-            if event.key == K_LEFT:
-                pistol.rotleft = False
-            if event.key == K_RIGHT:
-                pistol.rotright = False
+
     if player.position.y + 50 >= WINDOW_SIZE[1] and player.y_momentum > 0:
         player.y_momentum = 0
         player.position.y = WINDOW_SIZE[1] - 50
@@ -136,7 +130,7 @@ while Running:
     screen.blit(cointext, (10, 10))
 
     Player.Draw(screen, player.position.x - scroll[0], player.position.y - scroll[1])
-    pistol.draw(screen, scroll[0], scroll[1], player.position.x, player.position.y)
+    pistol.draw(screen, scroll[0], scroll[1], player.position.x, player.position.y, moveleft, moveright)
 
     pygame.display.update()
     applyGravity = True
