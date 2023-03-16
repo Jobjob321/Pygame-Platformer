@@ -16,4 +16,11 @@ class Gun:
             self.Rotated = False
             self.image = pygame.transform.flip(self.image, True, False)
 
+        
+        if self.Rotated == True:
+            self.x -= 20
+        if self.Rotated == False:
+            self.x += 20
+
+
         screen.blit(self.image, (self.x - scroll_x, self.y - scroll_y))
