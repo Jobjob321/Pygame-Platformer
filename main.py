@@ -136,16 +136,18 @@ while Running:
             coin.draw(screen, scroll[0], scroll[1], coinimage)
         
         for bullet in bullets:
-            if checkCollisions(bullet.x, bullet.y, 20, 10, coins[0].x, coins[0].y, coins[0].width, coins[0].height):
-                coins.remove(coins[0])
-                bullet.velocity = 0
-                bullet.velocity_y += player.gravity * dt
-                coinamount += 1
+            for coin in coins:
+                if checkCollisions(bullet.x, bullet.y, 20, 10, coin.x, coin.y, coin.width, coin.height):
+                    coins.remove(coin)
+                    coinamount += 1
+            for object in objects:
+                if checkCollisions(bullet.x, bullet.y, 20, 10,object.x, object.y, object.width, object.height):
+                    bullets.remove(bullet)
             if bullet.timer + 5 <= time.time():
                 bullets.remove(bullet)
             bullet.draw(screen, scroll[0], scroll[1])
-            bullet.x += bullet.velocity * dt * 250
-            bullet.y += bullet.velocity_y * dt * 250
+            bullet.x += bullet.velocity * dt * 150
+            bullet.y += bullet.velocity_y * dt * 150
 
 
 
