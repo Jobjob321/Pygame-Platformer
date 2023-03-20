@@ -4,6 +4,7 @@ from object import Object
 from utils import checkCollisions
 from gun import Gun
 from coin import Coin
+from Bullet import Bullet
 from pygame.locals import *
 import time
 pygame.init()
@@ -15,6 +16,7 @@ clock = pygame.time.Clock()
 scroll = [0,0]
 moveleft = False
 moveright = False
+lookleft = False
 jump = False
 mouse = [0,0]
 
@@ -30,6 +32,8 @@ applyGravity = True
 FONT = pygame.font.SysFont("Helvetica-bold", 50)
 
 player = Player()
+
+
 #objects
 objects = [
     Object(50,700,50,50, (0,0,0)),
@@ -41,9 +45,13 @@ objects = [
 
 coins = [Coin(700, 550), Coin(900, 700)]
 coinimage = pygame.image.load("imgs/Coin.png").convert_alpha()
+bulletimage = pygame.image.load("imgs/bullet.png").convert_alpha()
+bulletimage = pygame.transform.scale(bulletimage, (20,10))
+bullets = []
 coinamount = 0
 pistol = Gun()
 while Running:
+    print(prev_time)
     clock.tick(144)
     now = time.time()
     dt = now - prev_time
@@ -65,6 +73,8 @@ while Running:
                 moveright = True
             if event.key == K_SPACE:
                 jump = True
+            if event.key == K_f:
+                bullets.append(Bullet(player.position.x,player.position.y + 13, lookleft, bulletimage))
         if event.type == pygame.KEYUP:
             if event.key == K_a:
                 moveleft = False
@@ -83,8 +93,10 @@ while Running:
     for i in range(10):
         if moveleft == True:
             player.position.x -= 25 * dt
+            lookleft = True
         if moveright == True:
             player.position.x += 25 * dt
+            lookleft = False
         if CanJump == True and jump == True:
             player.y_momentum = -70
             CanJump = False
@@ -122,6 +134,18 @@ while Running:
                 print(coinamount)
                 coins.remove(coin)
             coin.draw(screen, scroll[0], scroll[1], coinimage)
+        
+        for bullet in bullets:
+            if checkCollisions(bullet.x, bullet.y, 20, 10, coins[0].x, coins[0].y, coins[0].width, coins[0].height):
+                coins.remove(coins[0])
+                bullet.velocity = 0
+                bullet.velocity_y += player.gravity * dt
+                coinamount += 1
+            if bullet.timer + 5 <= time.time():
+                bullets.remove(bullet)
+            bullet.draw(screen, scroll[0], scroll[1])
+            bullet.x += bullet.velocity * dt * 250
+            bullet.y += bullet.velocity_y * dt * 250
 
 
 
