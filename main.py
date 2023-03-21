@@ -9,8 +9,8 @@ from pygame.locals import *
 import time
 pygame.init()
 
-WINDOW_SIZE = [800, 800]
-screen = pygame.display.set_mode((WINDOW_SIZE[0], WINDOW_SIZE[1]), 0 ,32)
+WINDOW_SIZE = [1280, 800]
+screen = pygame.display.set_mode((WINDOW_SIZE[0], WINDOW_SIZE[1]), 0, 32)
 clock = pygame.time.Clock()
 
 scroll = [0,0]
@@ -43,7 +43,15 @@ objects = [
     Object(1500, 700, 100, 50, (0,0,0))
 ]
 
-coins = [Coin(700, 550), Coin(900, 700)]
+
+#Coins
+coins = [
+    Coin(700, 550), 
+    Coin(900, 700), 
+    Coin(1500, 650),
+    Coin(2000, 750)
+]
+
 coinimage = pygame.image.load("imgs/Coin.png").convert_alpha()
 bulletimage = pygame.image.load("imgs/bullet.png").convert_alpha()
 bulletimage = pygame.transform.scale(bulletimage, (20,10))
@@ -75,6 +83,7 @@ while Running:
                 jump = True
             if event.key == K_f:
                 bullets.append(Bullet(player.position.x,player.position.y + 13, lookleft, bulletimage))
+
         if event.type == pygame.KEYUP:
             if event.key == K_a:
                 moveleft = False
