@@ -10,7 +10,7 @@ import time
 pygame.init()
 
 WINDOW_SIZE = [1280, 800]
-screen = pygame.display.set_mode((WINDOW_SIZE[0], WINDOW_SIZE[1]), 0, 32)
+screen = pygame.display.set_mode((WINDOW_SIZE[0], WINDOW_SIZE[1]), pygame.FULLSCREEN, 32)
 clock = pygame.time.Clock()
 
 scroll = [0,0]
@@ -83,6 +83,9 @@ while Running:
                 jump = True
             if event.key == K_f:
                 bullets.append(Bullet(player.position.x,player.position.y + 13, lookleft, bulletimage))
+            
+            if event.key == K_ESCAPE:
+                Running = False
 
         if event.type == pygame.KEYUP:
             if event.key == K_a:
