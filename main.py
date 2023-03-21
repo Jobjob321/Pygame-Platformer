@@ -59,11 +59,10 @@ bullets = []
 coinamount = 0
 pistol = Gun()
 while Running:
-    print(prev_time)
     clock.tick(144)
     now = time.time()
     dt = now - prev_time
-    prev_time = now
+    prev_time =  now
     screen.fill((146,244,255))
 
     mouse = pygame.mouse.get_pos()
@@ -143,7 +142,6 @@ while Running:
         for coin in coins:
             if checkCollisions(coin.x, coin.y, coin.width, coin.height, player.position.x, player.position.y, 50, 50):
                 coinamount += 1
-                print(coinamount)
                 coins.remove(coin)
             coin.draw(screen, scroll[0], scroll[1], coinimage)
         
