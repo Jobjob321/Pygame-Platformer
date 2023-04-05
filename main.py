@@ -40,7 +40,8 @@ objects = [
     Object(500, 750, 50, 50, (255,255,255)),
     Object(475, 700, 100, 50, (255,0,0)),
     Object(1000,700,50,100, (255,255,255)),
-    Object(1500, 700, 100, 50, (0,0,0))
+    Object(1500, 700, 100, 50, (0,0,0)),
+    Object(0,0, 50, 650, (0,0, 0))
 ]
 
 
@@ -158,8 +159,6 @@ while Running:
             bullet.draw(screen, scroll[0], scroll[1])
             bullet.x += bullet.velocity * dt * 150
             bullet.y += bullet.velocity_y * dt * 150
-
-
 
 
     cointext = FONT.render("Coins: " + str(coinamount), 1, (0,0,0))
