@@ -13,21 +13,22 @@ WINDOW_SIZE = [1280, 800]
 screen = pygame.display.set_mode((WINDOW_SIZE[0], WINDOW_SIZE[1]), pygame.FULLSCREEN, 32)
 clock = pygame.time.Clock()
 
+
+#Player Stuff
 scroll = [0,0]
 moveleft = False
 moveright = False
 lookleft = False
 jump = False
 mouse = [0,0]
-
-prev_time = time.time()
-dt = 0
-
-getTicksLastFrame = 0
 Running = True
 CanJump = False
 applyGravity = True
 
+#Deltatime
+prev_time = time.time()
+dt = 0
+getTicksLastFrame = 0
 
 FONT = pygame.font.SysFont("Helvetica-bold", 50)
 
