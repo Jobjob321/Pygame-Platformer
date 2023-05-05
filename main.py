@@ -69,8 +69,8 @@ while Running:
     screen.fill((146,244,255))
 
     mouse = pygame.mouse.get_pos()
-    scroll[0] += (player.position.x-scroll[0] - WINDOW_SIZE[0]/2) * 2.5 * dt
-    scroll[1] += (player.position.y-scroll[1] - WINDOW_SIZE[1]/2) * 2.5 * dt
+    scroll[0] += (player.position.x-scroll[0] + 25 - WINDOW_SIZE[0]/2) * 5 * dt
+    scroll[1] += (player.position.y-scroll[1] + 25 - WINDOW_SIZE[1]/2) * 5 * dt
     if scroll[1] > 0:
         scroll[1] = 0
     for event in pygame.event.get():
