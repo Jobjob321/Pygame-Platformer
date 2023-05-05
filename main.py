@@ -56,7 +56,8 @@ coins = [
 
 coinimage = pygame.image.load("imgs/Coin.png").convert_alpha()
 bulletimage = pygame.image.load("imgs/bullet.png").convert_alpha()
-bulletimage = pygame.transform.scale(bulletimage, (20,10))
+bulletsize = [20,10]
+bulletimage = pygame.transform.scale(bulletimage, (bulletsize[0],bulletsize[1]))
 bullets = []
 coinamount = 0
 pistol = Gun()
@@ -149,11 +150,11 @@ while Running:
         
         for bullet in bullets:
             for coin in coins:
-                if checkCollisions(bullet.x, bullet.y, 20, 10, coin.x, coin.y, coin.width, coin.height):
+                if checkCollisions(bullet.x, bullet.y, bulletsize[0], bulletsize[1], coin.x, coin.y, coin.width, coin.height):
                     coins.remove(coin)
                     coinamount += 1
             for object in objects:
-                if checkCollisions(bullet.x, bullet.y, 20, 10,object.x, object.y, object.width, object.height):
+                if checkCollisions(bullet.x, bullet.y, bulletsize[0], bulletsize[1],object.x, object.y, object.width, object.height):
                     bullets.remove(bullet)
             if bullet.timer + 5 <= time.time():
                 bullets.remove(bullet)
